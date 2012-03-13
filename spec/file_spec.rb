@@ -45,6 +45,13 @@ describe Box::File do
       @dummy.parent.should be @test_root
       @dummy.name.should == 'dummy.test'
     end
+    
+    it "uploads a file once by default" do
+      @test_root.files.should have(1).thing
+      
+      @test_root.upload(@hello_file)
+      @test_root.files.should have(1).thing
+    end
 
     it "uploads a copy" do
       file = @dummy.upload_copy(@vegetables)

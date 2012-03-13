@@ -79,6 +79,12 @@ module Box
     #
     def query_upload(query, args, expected, options = {})
       # produces: /upload/<auth_token>/<arg1>/<arg2>/<etc>
+
+      # remove :new_copy from the options if it has no relevant value
+      if options.has_key?(:new_copy) && [nil, false, 0].member?(options[:new_copy])
+        options.delete(:new_copy)
+      end
+      
       url = [ "#{ @upload_url }/#{ query }", @auth_token, args ].flatten.compact.join('/')
       query_raw('post', url, expected, options)['response']
     end
